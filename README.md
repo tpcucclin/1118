@@ -1,6 +1,6 @@
 # 1118
 
-Problem O
+## Problem O 硬幣 
 
 ```mermaid
 flowchart TD;
@@ -53,5 +53,27 @@ print(dp[-1]) # 達到期望金額的組合數
 #2 3 5
 #Output
 #4
+
+```
+
+## Problem N 進步獎
+
+```
+# Problem N 進步獎 v1.a
+# 今年資訊月第5題剛好是一樣的題目
+n=int(input())
+s=list(map(int,input().split()))
+dp=[1]*n
+for i in range(1,n):
+    for j in range(i):
+        if s[i]>s[j]:
+            dp[i]=max(dp[i],dp[j]+1) # 這裡的 dp[i] 代表的是以 i 為結尾的最長遞增子序列
+print(max(dp))
+
+#Input
+#11
+#20 40 32 67 40 20 89 300 404 13 13
+#Output
+#6
 
 ```
