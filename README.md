@@ -1,5 +1,43 @@
 # 1118
 
+### list[(v,k), (v,k), ...] 依照 v升冪+k降冪排序, by TPCU C.C. Lin
+```
+d = {65:5, 66:5, 67:3, 68:5, 69:3, 70:1}
+t = [(v,k) for k,v in d.items()]
+t = sorted(t) # 依照 v 升冪排序
+
+i,ans=0,[]
+while len(t) > 0:
+    if i+1 <=len(t)-1 and t[i][0] == t[i+1][0]:
+        i += 1
+    else:
+        while True:
+            ans.append(t[i])
+            t.pop(i)
+            if i > 0:
+                i -= 1
+            else:
+                break
+
+print(ans)
+```
+
+### list[(k,v), (k,v), ...] 依照 k升冪+v降冪排序, by TPCU C.C. Lin
+```
+d = {65:5, 66:5, 67:3, 68:5,69:3,70:1}
+t = [(k,v) for k,v in d.items()]
+ans = sorted(t, key=lambda x:(x[1],-x[0])) # 使用 lambda 匿名函數
+print(ans)
+```
+
+### list[(v,k), (v,k), ...] 依照 v升冪+k降冪排序, by TPCU C.C. Lin
+```
+d = {65:5, 66:5, 67:3, 68:5,69:3,70:1}
+t = [(v,k) for k,v in d.items()]
+ans = sorted(t, key=lambda x:(x[0],-x[1])) # 使用 lambda 匿名函數
+print(ans)
+```
+
 ## Problem O 硬幣 
 
 ```mermaid
@@ -8,11 +46,12 @@ flowchart TD;
  B --> C[/讀入 硬幣種類/]
  C --> D[/"建立 dp list 大小為期望金額+1,<br> dp[i] 代表達成金額的方法數, 且dp[0]=1"/]
  D --> E("for 針對每種硬幣面額 <br> for 金額 從 1 到 期望金額")
- E --> 結束
+ E --> F{"(金額 - count) >= 0"}
  F --> |條件為真| H("dp[金額] +=  dp[金額 - coin]")
- E --> F{金額 - count >=0}
  F -->  |條件為否| E
  H --> E
+ E --> G("輸出結果<br/>print dp[-1]")
+ G--> Z("結束程式")
 ```
 
 ```
@@ -23,7 +62,7 @@ flowchart TD;
  D --> E("for 針對每種硬幣面額 <br> for 金額 從 1 到 期望金額")
  E --> 結束
  F --> |條件為真| H("dp[金額] +=  dp[金額 - coin]")
- E --> F{金額 - count >=0}
+ E --> F{"(金額 - count) >= 0"}
  F -->  |條件為否| E
  H --> E
 ```
