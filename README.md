@@ -1,41 +1,42 @@
 # 1118
 
-### list[(v,k), (v,k), ...] 依照 v升冪+k降冪排序, by TPCU C.C. Lin
+### list[(v,k), (v,k), ...] 需求：依照 v升冪+k降冪排序, by TPCU C.C. Lin
 ```
 d = {65:5, 66:5, 67:3, 68:5, 69:3, 70:1}
-t = [(v,k) for k,v in d.items()]
-t = sorted(t) # 依照 v 升冪排序
-
+t = [(v,k) for k,v in d.items()] # 利用 dict.items() 將 key, value 互換
+# 排序前 t 為 [(5, 65), (5, 66), (3, 67), (5, 68), (3, 69), (1, 70)]
+t = sorted(t) # 利用 sorted 先排序，但 v,k 都是升冪排序，無法符合需求
+# 排序後 t 為 [(1, 70), (3, 69), (3, 67), (5, 68), (5, 66), (5, 65)]
 i,ans=0,[]
 while len(t) > 0:
-    if i+1 <=len(t)-1 and t[i][0] == t[i+1][0]:
-        i += 1
+    if i+1 <=len(t)-1 and t[i][0] == t[i+1][0]: 
+        i += 1 # t[i][0] == t[i+1][0] 與後一個的內容相同, 重複次數+1
     else:
         while True:
             ans.append(t[i])
-            t.pop(i)
+            t.pop(i) # 將 t[i] 之內容移除
             if i > 0:
-                i -= 1
+                i -= 1 # 遞減重複次數，直到 0
             else:
                 break
-
-print(ans)
+ans = [(v,k) for k,v in ans] # 利用 dict.items() 將 key, value 互換
+print(ans) # [(70, 1), (69, 3), (67, 3), (68, 5), (66, 5), (65, 5)]
 ```
 
-### list[(k,v), (k,v), ...] 依照 k升冪+v降冪排序, by TPCU C.C. Lin
+### list[(k,v), (k,v), ...] 需求：依照 k升冪+v降冪排序, by TPCU C.C. Lin
 ```
 d = {65:5, 66:5, 67:3, 68:5,69:3,70:1}
 t = [(k,v) for k,v in d.items()]
 ans = sorted(t, key=lambda x:(x[1],-x[0])) # 使用 lambda 匿名函數
-print(ans)
+print(ans) # [(70, 1), (69, 3), (67, 3), (68, 5), (66, 5), (65, 5)]
 ```
 
-### list[(v,k), (v,k), ...] 依照 v升冪+k降冪排序, by TPCU C.C. Lin
+### list[(v,k), (v,k), ...] 需求：依照 v升冪+k降冪排序, by TPCU C.C. Lin
 ```
 d = {65:5, 66:5, 67:3, 68:5,69:3,70:1}
 t = [(v,k) for k,v in d.items()]
 ans = sorted(t, key=lambda x:(x[0],-x[1])) # 使用 lambda 匿名函數
-print(ans)
+print(ans) # [(1, 70), (3, 69), (3, 67), (5, 68), (5, 66), (5, 65)]
 ```
 
 ## Problem O 硬幣 
