@@ -39,6 +39,56 @@ ans = sorted(t, key=lambda x:(x[0],-x[1])) # 使用 lambda 匿名函數
 print(ans) # [(1, 70), (3, 69), (3, 67), (5, 68), (5, 66), (5, 65)]
 ```
 
+### 傳統建立質數表方式
+```
+# 引入 time 模組, Python 測量程式碼執行時間
+import time
+# 開始測量
+# time 是 Python 標準的時間模組，其 time.time() 函數可以用來取得目前的時間戳記，藉由程式碼執行前後的時間戳記，就可以計算程式執行的時間：
+StartT = time.time()
+
+def prime(n):
+    for i in range(2,int(n**0.5)+1):
+        if n%i==0:
+            return False
+    return True
+
+# 建表
+P=[]
+N=10**6   #1,000,000
+for start in range(2,N):
+    if prime(start):
+        P.append(start)
+print(len(P))
+# print(P)
+# 結束測量
+EndT = time.time()
+# 輸出結果
+print("執行時間：{:.2f} 秒".format(EndT - StartT))
+```
+
+### Sieve of Eratosthenes 篩法建立質數表
+```
+import time
+# 開始測量
+# time 是 Python 標準的時間模組，其 time.time() 函數可以用來取得目前的時間戳記，藉由程式碼執行前後的時間戳記，計算程式執行的時間：
+StartT = time.time()
+
+def eratosthenes(n):
+    is_prime = [True] * (n + 1)
+    for i in range(2, int(n ** 0.5) + 1):
+        if is_prime[i]:
+            for j in range(i * i, n + 1, i):
+                is_prime[j] = False
+    return [x for x in range(2, n + 1) if is_prime[x]]
+
+print(len(eratosthenes(10**6)))
+# 結束測量
+EndT = time.time()
+# 輸出結果
+print("執行時間：{:.2f} 秒".format(EndT - StartT))
+```
+
 ## Problem O 硬幣 
 
 ```mermaid
@@ -100,7 +150,7 @@ print(dp[-1]) # 達到期望金額的組合數
 
 ```
 # Problem N 進步獎 v1.a
-# 今年資訊月第5題剛好是一樣的題目
+# 與111資訊月第5題 最長遞增子序列的長度判斷 題型類似
 n=int(input())
 s=list(map(int,input().split()))
 dp=[1]*n
